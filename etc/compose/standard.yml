@@ -557,6 +557,19 @@ services:
     image: "dtagdevsec/logstash:2204"
     volumes:
      - /data:/data
+     - /opt/tpot/docker/elk/logstash/dist/logstash.conf:/etc/logstash/conf.d/logstash.conf
+     
+## Filebeat service
+  filebeat:
+    container_name: filebeat
+    restart: always
+    depends_on:
+     - "logstash"
+    user: root
+    image: docker.elastic.co/beats/filebeat:7.17.0
+    volumes:
+     - /data:/data
+     - /opt/tpot/docker/elk/filebeat/conf/filebeat.yml:/usr/share/filebeat/filebeat.yml"
 
 ## Map Redis Service
   map_redis:
