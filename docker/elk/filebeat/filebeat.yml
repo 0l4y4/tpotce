@@ -1,0 +1,186 @@
+#### Se configuran el input con los correspondientes logs y se añade la clave "tags" para poder identificarlos en logstash ####
+#### Se configura el output para enviar los logs a logstash ####
+#### Falta revisar otros datos de configuracion como "processors", "modules", etc. ####
+
+filebeat.input:
+
+# Fatt
+- type: log
+  paths:
+    - '/data/fatt/log/fatt.log'
+  tags: ["Fatt"]
+
+# Suricata
+- type: log
+  paths:
+    - '/data/suricata/log/eve.json'
+  tags: ["Suricata"]
+
+# P0f
+- type: log
+  paths:
+    - '/data/p0f/log/p0f.json'
+  tags: ["P0f"]
+
+# Adbhoney
+- type: log
+  paths:
+    - '/data/adbhoney/log/adbhoney.json'
+  tags: ["Adbhoney"]
+
+# Ciscoasa
+- type: log
+  paths:
+    - '/data/ciscoasa/log/ciscoasa.log'
+  tags: ["Ciscoasa"]
+
+# CitrixHoneypot
+- type: log
+  paths:
+    - '/data/citrixhoneypot/logs/server.log'
+  tags: ["CitrixHoneypot"]
+
+# Conpot
+- type: log
+  paths:
+    - '/data/conpot/log/*.json'
+  tags: ["ConPot"]
+
+# Cowrie
+- type: log
+  paths:
+    - '/data/cowrie/log/cowrie.json'
+  tags: ["Cowrie"]
+
+# Dionaea
+- type: log
+  paths:
+    - '/data/dionaea/log/dionaea.json'
+  tags: ["Dionaea"]
+
+# Dicompot
+- type: log
+  paths:
+    - '/data/dicompot/log/dicompot.log'
+  tags: ["Dicompot"]
+
+# Ddospot
+- type: log
+  paths:
+    - '/data/ddospot/log/*.log'
+  tags: ["Ddospot"]
+
+# ElasticPot
+- type: log
+  paths:
+    - '/data/elasticpot/log/elasticpot.json'
+  tags: ["ElasticPot"]
+
+# Endlessh
+- type: log
+  paths:
+    - '/data/endlessh/log/endlessh.log'
+  tags: ["Endlessh"]
+
+# Glutton
+- type: log
+  paths:
+    - '/data/glutton/log/glutton.log'
+  tags: ["Glutton"]
+
+# Hellpot
+- type: log
+  paths:
+    - '/data/hellpot/log/hellpot.log'
+  tags: ["Hellpot"]
+
+# Heralding
+- type: log
+  paths:
+    - '/data/heralding/log/auth.csv'
+  tags: ["Heralding"]
+
+# Honeypots
+- type: log
+  paths:
+    - '/data/honeypots/log/*.log'
+  tags: ["Honeypots"]
+
+# Honeypy
+- type: log
+  paths:
+    - '/data/honeypy/log/json.log'
+  tags: ["Honeypy"]
+
+# Honeysap
+- type: log
+  paths:
+    - '/data/honeysap/log/honeysap-external'
+  tags: ["Honeysap"]
+
+# Honeytrap
+- type: log
+  paths:
+    - '/data/honeytrap/log/attackers.json'
+  tags: ["Honeytrap"]
+
+# Ipphoney
+- type: log
+  paths:
+    - '/data/ipphoney/log/ipphoney.json'
+  tags: ["Ipphoney"]
+
+# Log4pot
+- type: log
+  paths:
+    - '/data/log4pot/log/log4pot.log'
+  tags: ["Log4pot"]
+
+# Mailoney
+- type: log
+  paths:
+    - '/data/mailoney/log/commands.log'
+  tags: ["Mailoney"]
+
+# Medpot
+- type: log
+  paths:
+    - '/data/medpot/log/medpot.log'
+  tags: ["Medpot"]
+
+# Rdpy
+- type: log
+  paths:
+    - '/data/rdpy/log/rdpy.log'
+  tags: ["Rdpy"]
+
+# Redishoneypot
+- type: log
+  paths:
+    - '/data/redishoneypot/log/redishoneypot.log'
+  tags: ["Redishoneypot"]
+
+# Host
+- type: log
+  paths:
+    - '/data/nginx/log/access.log'
+  tags: ["NGINX"]
+
+# Tanner
+- type: log
+  paths:
+    - '/data/tanner/log/tanner_report.json'
+  tags: ["Tanner"]
+
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+processors:
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+
+output.logstash:
+  hosts: ["logstash:5044"]
